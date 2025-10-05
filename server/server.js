@@ -27,8 +27,8 @@ if (process.env.NODE_ENV === 'production') {
   // Serve frontend build folder
   app.use(express.static(path.join(__dirname, '../client/dist')));
   
-  // FIX: wildcard route
-  app.get('/*', (req, res) => {
+  // Catch-all route - FIXED: changed from '/*' to '*'
+  app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
   });
 } else {
