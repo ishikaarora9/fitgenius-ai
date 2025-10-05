@@ -1,3 +1,4 @@
+// server.js
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
@@ -23,17 +24,21 @@ app.use('/api/diet', require('./routes/dietRoutes'));
 
 // Serve static files from React app in production
 if (process.env.NODE_ENV === 'production') {
+  // Serve frontend build folder
   app.use(express.static(path.join(__dirname, '../client/dist')));
   
-  app.get('*', (req, res) => {
+  // FIX: wildcard route
+  app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
   });
 } else {
+  // Development root route
   app.get('/', (req, res) => {
     res.json({ message: 'FitGenius API is running!' });
   });
 }
 
+// Use environment PORT or fallback
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
