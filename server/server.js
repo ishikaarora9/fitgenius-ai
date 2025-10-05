@@ -16,7 +16,7 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-// API Routes
+// API Routes - MUST come before static files
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/user', require('./routes/userRoutes'));
 app.use('/api/workout', require('./routes/workoutRoutes'));
@@ -27,8 +27,8 @@ if (process.env.NODE_ENV === 'production') {
   // Serve frontend build folder
   app.use(express.static(path.join(__dirname, '../client/dist')));
   
-  // Catch-all route - FIXED: changed from '/*' to '*'
-  app.get('*', (req, res) => {
+  // Catch-all route for React Router - using a function instead of wildcard
+  app.use((req, res) => {
     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
   });
 } else {
