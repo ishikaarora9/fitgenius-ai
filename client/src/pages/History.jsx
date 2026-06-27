@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { workoutAPI, dietAPI } from '../services/api';
-import { ArrowLeft, Dumbbell, Apple, Calendar, Trash2 } from 'lucide-react';
+import { ArrowLeft, Dumbbell, Apple, Calendar } from 'lucide-react';
 
 const History = () => {
   const navigate = useNavigate();
@@ -125,28 +125,51 @@ const History = () => {
                         </div>
 
                         <div className="space-y-4">
-                          {workout.workoutPlan?.workouts?.slice(0, 2).map((day, i) => (
+                          {workout.workoutPlan?.workouts?.map((day, i) => (
                             <div key={i} className="bg-gray-50 p-4 rounded-lg">
                               <h4 className="font-bold text-blue-600 mb-2">
                                 {day.day} - {day.focus}
                               </h4>
-                              <div className="text-sm text-gray-600">
-                                {day.exercises?.length || 0} exercises
+                              <div className="space-y-2">
+                                {day.exercises?.map((exercise, j) => (
+                                  <div key={j} className="bg-white border rounded-lg p-3">
+                                    <h5 className="font-semibold text-gray-800">{exercise.name}</h5>
+                                    <p>Sets: {exercise.sets}</p>
+                                    <p>Reps: {exercise.reps}</p>
+                                    <p>Rest: {exercise.rest}</p>
+                                    <p>Instructions: {exercise.instructions}</p>
+                                  </div>
+                                ))}
                               </div>
                             </div>
                           ))}
-                          {workout.workoutPlan?.workouts?.length > 2 && (
-                            <p className="text-sm text-gray-500">
-                              + {workout.workoutPlan.workouts.length - 2} more days
-                            </p>
-                          )}
                         </div>
 
-                        {workout.workoutPlan?.tips && (
+                        {/* Warm-up */}
+                        {workout.workoutPlan?.warmup && (
+                          <div className="mt-4 p-3 bg-orange-50 rounded-lg">
+                            <h4 className="font-bold text-orange-700 mb-2">Warm-up</h4>
+                            <p>{workout.workoutPlan.warmup}</p>
+                          </div>
+                        )}
+
+                        {/* Cool Down */}
+                        {workout.workoutPlan?.cooldown && (
+                          <div className="mt-4 p-3 bg-green-50 rounded-lg">
+                            <h4 className="font-bold text-green-700 mb-2">Cool Down</h4>
+                            <p>{workout.workoutPlan.cooldown}</p>
+                          </div>
+                        )}
+
+                        {/* Tips */}
+                        {workout.workoutPlan?.tips?.length > 0 && (
                           <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-                            <p className="text-sm text-gray-700">
-                              <strong>Tip:</strong> {workout.workoutPlan.tips[0]}
-                            </p>
+                            <h4 className="font-bold text-blue-700 mb-2">Tips</h4>
+                            <ul className="list-disc pl-5">
+                              {workout.workoutPlan.tips.map((tip, i) => (
+                                <li key={i}>{tip}</li>
+                              ))}
+                            </ul>
                           </div>
                         )}
                       </div>
@@ -192,6 +215,7 @@ const History = () => {
                           )}
                         </div>
 
+                        {/* Macros */}
                         {meal.mealPlan?.macros && (
                           <div className="grid grid-cols-3 gap-3 mb-4">
                             <div className="bg-green-50 p-3 rounded-lg text-center">
@@ -215,23 +239,31 @@ const History = () => {
                           </div>
                         )}
 
-                        <div className="space-y-2">
-                          {meal.mealPlan?.meals?.slice(0, 3).map((m, i) => (
-                            <div key={i} className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
-                              <div>
-                                <div className="font-medium text-gray-800">{m.mealType}</div>
-                                <div className="text-sm text-gray-600">{m.name}</div>
-                              </div>
-                              <div className="text-sm font-semibold text-green-600">
-                                {m.calories} kcal
-                              </div>
+                        {/* Meals List */}
+                        <div className="space-y-3">
+                          {meal.mealPlan?.meals?.map((m, i) => (
+                            <div key={i} className="bg-gray-50 p-4 rounded-lg">
+                              <h4 className="font-bold text-green-700">{m.mealType}</h4>
+                              <p><strong>Name:</strong> {m.name}</p>
+                              <p><strong>Calories:</strong> {m.calories} kcal</p>
+                              <p><strong>Time:</strong> {m.time}</p>
+                              {m.ingredients?.length > 0 && (
+                                <>
+                                  <p className="font-semibold mt-2">Ingredients</p>
+                                  <ul className="list-disc pl-5">
+                                    {m.ingredients.map((item, j) => (
+                                      <li key={j}>{item}</li>
+                                    ))}
+                                  </ul>
+                                </>
+                              )}
+                              {m.instructions && (
+                                <p className="mt-2">
+                                  <strong>Instructions:</strong> {m.instructions}
+                                </p>
+                              )}
                             </div>
                           ))}
-                          {meal.mealPlan?.meals?.length > 3 && (
-                            <p className="text-sm text-gray-500 text-center">
-                              + {meal.mealPlan.meals.length - 3} more meals
-                            </p>
-                          )}
                         </div>
                       </div>
                     ))
