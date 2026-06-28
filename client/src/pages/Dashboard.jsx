@@ -88,12 +88,12 @@ const Dashboard = () => {
           </div>
           
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg mb-4">No progress data yet</p>
+            <p className="text-gray-500 text-lg mb-4">Click Here to See Your Progress</p>
             <button
               onClick={() => navigate('/progress')}
               className="bg-purple-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-purple-700 transition"
             >
-              Add Your First Progress Entry
+              Add Your Progress Entry
             </button>
           </div>
         </div>
