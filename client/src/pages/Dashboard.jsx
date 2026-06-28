@@ -20,7 +20,7 @@ const Dashboard = () => {
             <Dumbbell className="text-purple-600" size={32} />
             <h1 className="text-2xl font-bold text-gray-800">FitGenius AI</h1>
           </div>
-          
+
           <div className="flex items-center gap-4">
             <span className="text-gray-700">👋 Hi, {user?.name}</span>
             <button
@@ -86,15 +86,29 @@ const Dashboard = () => {
             <TrendingUp className="text-purple-600" size={32} />
             <h3 className="text-2xl font-bold">Your Progress</h3>
           </div>
-          
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg mb-4">Click Here to See Your Progress</p>
-            <button
-              onClick={() => navigate('/progress')}
-              className="bg-purple-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-purple-700 transition"
-            >
-              Add Your Progress Entry
-            </button>
+
+          <div className="text-center py-8">
+            <p className="text-gray-500 text-lg mb-6">
+              Track your fitness journey and monitor your progress.
+            </p>
+
+            <div className="flex flex-wrap justify-center gap-4">
+              {/* View Progress Entries */}
+              <button
+                onClick={() => navigate('/progress', { state: { tab: 'view' } })}
+                className="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 transition"
+              >
+                📊 View Progress Entries
+              </button>
+
+              {/* Add Progress Entry */}
+              <button
+                onClick={() => navigate('/progress', { state: { tab: 'add' } })}
+                className="bg-purple-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-purple-700 transition"
+              >
+                ➕ Add Progress Entry
+              </button>
+            </div>
           </div>
         </div>
       </main>
