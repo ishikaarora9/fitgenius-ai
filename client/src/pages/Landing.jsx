@@ -63,7 +63,7 @@ const Landing = () => {
       </div>
 
       <footer className="text-center text-white/80 py-6">
-        <p>Built with AI • Made for Fitness Enthusiasts</p>
+        <p>Made for Fitness Enthusiasts</p>
       </footer>
     </div>
   );
